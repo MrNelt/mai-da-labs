@@ -1,0 +1,139 @@
+\section{Описание}
+Требуется написать реализацию алгоритма поразрядной сортировки.
+
+Сам алгоритм состоит в последовательной сортировке объектов какой-либо устойчивой сортировкой по каждому разряду,
+в порядке от младшего разряда к старшему, после чего последовательности будут расположены в требуемом порядке.
+В качестве устойчивой сортировки буду использовать сортировку подсчётом.
+
+\pagebreak
+
+\section{Исходный код}
+Формально структура программы состоит из 3 файлов:
+
+1. $radix\_sort.h$ В нем содержится структура сортируемых объектов, сигнатура функции поразрядной сортировки
+
+2. $radix\_sort.cpp$ В нем содержится реализация поразрядной сортировки
+
+3. $main\_cpp$ Ввод объектов, сортировка объектов, вывод объектов
+ 
+\begin{lstlisting}[language=C++]
+#ifndef RADIX_SORT_H
+#define RADIX_SORT_H
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+struct TNode {
+	static const size_t KEY_SIZE = 8;
+	static const size_t DIGIT_SIZE = 128;
+	std::string key;
+	std::string *value;
+	int GetValue(size_t n) {
+		return static_cast<int>(key[n]);
+	};
+};
+
+
+void RadixSort(std::vector <TNode>& data, size_t n);
+
+#endif
+	
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++]
+#include "radix_sort.h"
+
+
+void RadixSort(std::vector<TNode> &data, size_t n) {
+	for (size_t i = TNode::KEY_SIZE; i > 0; --i) {
+		std::vector <TNode> result(n);
+		std::vector <int> count(TNode::DIGIT_SIZE);
+		for (size_t j = 0; j < n; ++j) {
+			count[data[j].GetValue(i - 1)]++;
+		}
+		for (size_t j = 1; j < TNode::DIGIT_SIZE; ++j) {
+			count[j] += count[j - 1];
+		}
+		for (size_t j = n; j > 0; j--) {
+			int index = count[data[j - 1].GetValue(i - 1)];
+			result[index - 1] = data[j - 1];
+			count[data[j - 1].GetValue(i - 1)]--;
+		}
+		for (size_t j = 0; j < n; ++j) {
+			data[j] = result[j];
+		}
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+
+#include "radix_sort.h"
+
+
+int main() {
+	std::ios::sync_with_stdio(false);
+	std::cout.tie(nullptr);
+	std::cin.tie(nullptr);
+
+	std::vector <TNode> data;
+	std::string first;
+	std::string number;
+	std::string second;
+	std::string value;
+	while (std::cin >> first >> number >> second >> value) {
+		TNode elem;
+		elem.value = new std::string;
+		std::string key;
+		key += first;
+		key += " ";
+		key += number;
+		key += " ";
+		key += second;
+		elem.key = key;
+		*elem.value = value;
+		data.push_back(elem);
+	}
+	if (!data.empty()) {
+		RadixSort(data, data.size());
+	}
+	for (const auto & elem : data) {
+		std::cout << elem.key << "\t" << *elem.value << "\n";
+		delete elem.value;
+	}
+}
+\end{lstlisting}
+\pagebreak
+
+\section{Консоль}
+\begin{alltt}
+[alex@fedora mai-da-labs]$ cd build
+[alex@fedora build]$ cmake ../
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/alex/mai-da-labs/build
+[alex@fedora build]$ cmake --build .
+[ 21%] Built target lab1
+[ 35%] Built target gtest
+[ 50%] Built target gtest_main
+[ 57%] Building CXX object tests/CMakeFiles/lab1_test.dir/lab1_test.cpp.o
+[ 64%] Linking CXX executable lab1_test
+[ 71%] Built target lab1_test
+[ 85%] Built target gmock
+[100%] Built target gmock_main
+[alex@fedora build]$ cd lab1/
+[alex@fedora lab1]$ ./lab1 
+A 999 ZZ ZZZZZZZZZZZ
+A 888 ZZ F
+B 999 EE DDDDDDDD
+H 991 FF SSS
+A 888 ZZ	F
+A 999 ZZ	ZZZZZZZZZZZ
+B 999 EE	DDDDDDDD
+H 991 FF	SSS
+
+\end{alltt}
+\pagebreak
+

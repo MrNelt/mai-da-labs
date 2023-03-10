@@ -1,3 +1,16 @@
+\section{Тесты}
+
+Тест представляет собой программу, в которой содержится:
+
+1. генератор объектов
+
+2. проверка на устойчивость сортировки
+
+3. проверка на правильность с помощью $std::stable\_sort$
+
+4. сравнивается производительность $Radix Sort$ и $std::stable\_sort$ при $n = 10^6$
+
+\begin{lstlisting}[language=C++]
 #include <algorithm>
 #include <cstddef>
 #include <gtest/gtest.h>
@@ -123,3 +136,55 @@ TEST(Lab1Test, Banchmark) {
     EXPECT_GE(time2, time1);
 
 }
+\end{lstlisting}
+
+
+
+\begin{alltt}
+[alex@fedora build]$ ctest -V
+UpdateCTestConfiguration  from :/home/alex/mai-da-labs/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/home/alex/mai-da-labs/build/DartConfiguration.tcl
+Test project /home/alex/mai-da-labs/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: lab1_test
+
+1: Test command: /home/alex/mai-da-labs/build/tests/lab1_test
+1: Working Directory: /home/alex/mai-da-labs/build/tests
+1: Test timeout computed to be: 10000000
+1: Running main() from /home/alex/mai-da-labs/build/_deps/googletest-src/googletest/src/gtest_main.cc
+1: [==========] Running 3 tests from 1 test suite.
+1: [----------] Global test environment set-up.
+1: [----------] 3 tests from Lab1Test
+1: [ RUN      ] Lab1Test.StableTest
+1: [       OK ] Lab1Test.StableTest (0 ms)
+1: [ RUN      ] Lab1Test.CommonTest
+1: [       OK ] Lab1Test.CommonTest (219 ms)
+1: [ RUN      ] Lab1Test.Benchmark
+1: RadixSort time: 886 ms
+1: std::stable_sort time: 1185ms
+1: [       OK ] Lab1Test.Benchmark (4128 ms)
+1: [----------] 3 tests from Lab1Test (4348 ms total)
+1: 
+1: [----------] Global test environment tear-down
+1: [==========] 3 tests from 1 test suite ran. (4348 ms total)
+1: [  PASSED  ] 3 tests.
+1/1 Test #1: lab1_test ........................   Passed    4.37 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   4.37 sec
+
+\end{alltt}
+
+Как видно, $RadixSort$ выиграл у $std::stable\_sort$, так как сложность по времени $RadixSort$ равна $O(k(n + d))$, где $n$ - количество объектов, $k$ - количество разрядов у ключа объекта, $d$ - размер разряда, а сложность
+$std::stable\_sort$ равна $O(n * log(n))$, где $n$ - количество объектов.
+
+
+\pagebreak
+
