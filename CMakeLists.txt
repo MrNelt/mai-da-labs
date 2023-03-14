@@ -11,4 +11,5 @@ else()
 endif()
 
 add_subdirectory(lab1)
+add_subdirectory(radix_sort)
 add_subdirectory(tests)

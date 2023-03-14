@@ -16,3 +16,10 @@ add_executable(lab1_test lab1_test.cpp ../lab1/src/radix_sort.cpp ../lab1/includ
 target_link_libraries(lab1_test PRIVATE GTest::GTest)
 target_include_directories(lab1_test PRIVATE ../lab1/include)
 add_test(lab1_test lab1_test)
+
+
+add_executable(radix_sort_test radix_sort_test.cpp ../radix_sort/src/sort.cpp ../radix_sort/include/sort.h)
+target_link_libraries(radix_sort_test PRIVATE GTest::GTest)
+target_include_directories(radix_sort_test PRIVATE ../radix_sort/include)
+add_test(radix_sort_test radix_sort_test)
+
