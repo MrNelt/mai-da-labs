@@ -16,8 +16,6 @@ void RadixSort(std::vector<TNode> &data, size_t n) {
             result[index - 1] = data[j - 1];
             count[data[j - 1].GetValue(i - 1)]--;
         }
-        for (size_t j = 0; j < n; ++j) {
-            data[j] = result[j];
-        }
+        data = std::move(result);
     }
 }

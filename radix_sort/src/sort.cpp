@@ -19,6 +19,6 @@ void RadixSort(std::vector<int>& data) {
             res[index - 1] = elem;
             count[(elem >> (sizeOfByte * i)) & ((1 << sizeOfByte) - 1)]--;
         }
-        data = res;
+        data = std::move(res);
     }
 }
