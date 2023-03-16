@@ -32,7 +32,7 @@ TEST(RadixSortTest, CommonTest) {
 }
 
 
-TEST(RadixSortTest, Banchmark) {
+TEST(RadixSortTest, Benchmark) {
     const size_t size = 5000000;
     auto input1 = NDatagen::GenerateVector(size);
     auto input2 = input1;
