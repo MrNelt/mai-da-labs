@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <cstddef>
 #include <gtest/gtest.h>
-#include <string>
 #include <cstdlib>
 #include <ctime>
 #include <chrono>
