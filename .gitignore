@@ -34,3 +34,4 @@ build
 
 .cache
 cmake-build-debug
+.idea

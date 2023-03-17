@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "treap.hpp"
+#include "treap.h"
 
 int main() {
     TTreap treap;
