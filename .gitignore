@@ -33,3 +33,4 @@ build
 *.app
 
 .cache
+cmake-build-debug
