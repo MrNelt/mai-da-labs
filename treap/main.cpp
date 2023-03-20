@@ -17,12 +17,19 @@ int main() {
             treap.Erase(key);
         } else if (command == "print") {
             treap.Print();
-        } else if (command == "exist"){
+        } else if (command == "exist") {
             int key;
             std::cin >> key;
             std::cout << treap.Exist(key) << '\n';
+        } else if (command == "empty") {
+            std::cout << treap.Empty() << "\n";
+        } else if (command == "size") {
+            std::cout << treap.Size() << "\n";
+        } else if (command == "clear") {
+            treap.Clear();
+            std::cout << "Done!\n";
         } else {
-            std::cout << "command doesn't exist\n";
+            std::cout << "doesn't exist\n";
         }
     }
 }

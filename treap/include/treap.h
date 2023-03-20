@@ -9,7 +9,7 @@
 
 class TTreap {
 
-    private:
+private:
 
     struct TNode {
         TNode* left;
@@ -32,9 +32,13 @@ class TTreap {
 
     TNode* Find(TNode* ptr, int key);
 
-    void Destroy(TNode* node);
+    size_t Size(TNode* ptr);
 
-    public:
+    void Destroy(TNode*& node);
+
+    void Destroy();
+
+public:
 
     TTreap();
 
@@ -42,13 +46,17 @@ class TTreap {
 
     void Print();
 
-    void Destroy();
-
     void Insert(int key);
 
     void Erase(int key);
 
     bool Exist(int key);
+
+    bool Empty();
+
+    void Clear();
+
+    size_t Size();
 
 };
 

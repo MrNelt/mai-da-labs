@@ -61,12 +61,12 @@ void TTreap::Destroy() {
     Destroy(root);
 }
 
-void TTreap::Destroy(TNode* node) {
+void TTreap::Destroy(TNode*& node) {
     if (node != nullptr) {
         Destroy(node->left);
         Destroy(node->right);
+        delete node;
     }
-    delete node;
 }
 
 TTreap::TTreap() {
@@ -129,4 +129,30 @@ void TTreap::Erase(int key) {
 
 bool TTreap::Exist(int key) {
     return Find(key) != nullptr;
+}
+
+bool TTreap::Empty() {
+    return root == nullptr;
+}
+
+size_t TTreap::Size(TTreap::TNode* ptr) {
+    if (ptr != nullptr) {
+        return 1 + Size(ptr->left) + Size(ptr->right);
+    }
+    return 0;
+}
+
+size_t TTreap::Size() {
+    if (root != nullptr) {
+        return Size(root);
+    }
+    return 0;
+}
+
+void TTreap::Clear() {
+    if (root != nullptr) {
+        Destroy(root->left);
+        Destroy(root->right);
+    }
+    root = nullptr;
 }
