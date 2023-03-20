@@ -153,6 +153,7 @@ void TTreap::Clear() {
     if (root != nullptr) {
         Destroy(root->left);
         Destroy(root->right);
+        delete root;
     }
     root = nullptr;
 }
