@@ -157,3 +157,14 @@ void TTreap::Clear() {
     }
     root = nullptr;
 }
+
+size_t TTreap::Height(TTreap::TNode* ptr) {
+    if (ptr != nullptr) {
+        return 1 + std::max(Height(ptr->left), Height(ptr->right));
+    }
+    return 0;
+}
+
+size_t TTreap::Height() {
+    return Height(root);
+}

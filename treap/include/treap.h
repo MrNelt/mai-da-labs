@@ -34,6 +34,8 @@ private:
 
     size_t Size(TNode* ptr);
 
+    size_t Height(TNode* ptr);
+
     void Destroy(TNode*& node);
 
     void Destroy();
@@ -55,6 +57,8 @@ public:
     bool Empty();
 
     void Clear();
+
+    size_t Height();
 
     size_t Size();
 

@@ -28,6 +28,8 @@ int main() {
         } else if (command == "clear") {
             treap.Clear();
             std::cout << "Done!\n";
+        } else if (command == "h") {
+            std::cout << treap.Height() << "\n";
         } else {
             std::cout << "doesn't exist\n";
         }
