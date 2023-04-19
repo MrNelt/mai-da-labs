@@ -14,23 +14,24 @@ private:
     struct TNode {
         TNode* left;
         TNode* right;
-        int key;
+        std::string key;
+        unsigned long long value;
         unsigned long long priority;
 
-        TNode (int key);
+        TNode (std::string key, unsigned long long value);
     };
 
     TNode* root;
 
     TNode* Merge(TNode* treap1, TNode* treap2);
 
-    void Split(TNode* treap, int key, TNode*& treap1, TNode*& treap2);
+    void Split(TNode* treap, const std::string& key, TNode*& treap1, TNode*& treap2);
 
     static void Print(TNode* ptr, size_t height);
 
-    TNode* Find(int key);
+    TNode* Find(const std::string& key);
 
-    TNode* Find(TNode* ptr, int key);
+    TNode* Find(TNode* ptr, const std::string& key);
 
     size_t Size(TNode* ptr);
 
@@ -48,11 +49,11 @@ public:
 
     void Print();
 
-    void Insert(int key);
+    void Insert(const std::string& key, unsigned long long value);
 
-    void Erase(int key);
+    void Erase(const std::string& key);
 
-    bool Exist(int key);
+    std::pair<unsigned long long, bool> Exist(const std::string& key);
 
     bool Empty();
 

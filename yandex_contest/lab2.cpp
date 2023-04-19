@@ -1,7 +1,66 @@
-#include "treap.h"
+#include <chrono>
+#include <random>
+#include <iostream>
+#include <algorithm>
 
-#include <utility>
 
+class TTreap {
+
+private:
+
+    struct TNode {
+        TNode* left;
+        TNode* right;
+        std::string key;
+        unsigned long long value;
+        unsigned long long priority;
+
+        TNode (std::string key, unsigned long long value);
+    };
+
+    TNode* root;
+
+    TNode* Merge(TNode* treap1, TNode* treap2);
+
+    void Split(TNode* treap, const std::string& key, TNode*& treap1, TNode*& treap2);
+
+    static void Print(TNode* ptr, size_t height);
+
+    TNode* Find(const std::string& key);
+
+    TNode* Find(TNode* ptr, const std::string& key);
+
+    size_t Size(TNode* ptr);
+
+    size_t Height(TNode* ptr);
+
+    void Destroy(TNode*& node);
+
+    void Destroy();
+
+public:
+
+    TTreap();
+
+    ~TTreap();
+
+    void Print();
+
+    void Insert(const std::string& key, unsigned long long value);
+
+    void Erase(const std::string& key);
+
+    std::pair<unsigned long long, bool> Exist(const std::string& key);
+
+    bool Empty();
+
+    void Clear();
+
+    size_t Height();
+
+    size_t Size();
+
+};
 
 std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
 
@@ -55,7 +114,7 @@ TTreap::TNode* TTreap::Find(TNode* ptr, const std::string& key) {
         return ptr;
     }
     if (ptr->key > key) {
-        return Find(ptr->left, key); 
+        return Find(ptr->left, key);
     }
     return Find(ptr->right, key);
 }
@@ -92,7 +151,7 @@ void TTreap::Print(TNode* ptr, size_t height) {
         }
         std::cout << ptr->key << " " << ptr->priority << '\n';
         Print(ptr->left, height + 1);
-        Print(ptr->right, height + 1); 
+        Print(ptr->right, height + 1);
     }
 }
 
@@ -174,4 +233,48 @@ size_t TTreap::Height(TTreap::TNode* ptr) {
 
 size_t TTreap::Height() {
     return Height(root);
+}
+
+int main() {
+    std::ios::sync_with_stdio(false);
+    std::cout.tie(nullptr);
+    std::cin.tie(nullptr);
+    TTreap treap;
+    std::string command;
+    while (std::cin >> command) {
+        if (command == "+") {
+            std::string key;
+            unsigned long long value;
+            std::cin >> key >> value;
+            std::transform(key.begin(), key.end(), key.begin(),
+                           [](unsigned char symb){ return std::tolower(symb); });
+            if (treap.Exist(key).second) {
+                std::cout << "Exist\n";
+            } else {
+                treap.Insert(key, value);
+                std::cout << "OK\n";
+            }
+        }
+        else if (command == "-") {
+            std::string key;
+            std::cin >> key;
+            std::transform(key.begin(), key.end(), key.begin(),
+                           [](unsigned char symb){ return std::tolower(symb); });
+            if (!treap.Exist(key).second) {
+                std::cout << "NoSuchWord\n";
+            } else {
+                treap.Erase(key);
+                std::cout << "OK\n";
+            }
+        } else {
+            std::transform(command.begin(), command.end(), command.begin(),
+                           [](unsigned char symb){ return std::tolower(symb); });
+            auto node = treap.Exist(command);
+            if (node.second) {
+                std::cout << "OK: " << node.first << "\n";
+            } else {
+                std::cout << "NoSuchWord\n";
+            }
+        }
+    }
 }
