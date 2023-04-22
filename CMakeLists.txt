@@ -14,5 +14,6 @@ add_subdirectory(lab1)
 add_subdirectory(lab2)
 add_subdirectory(radix_sort)
 add_subdirectory(treap)
+add_subdirectory(avl)
 
 add_subdirectory(tests)
