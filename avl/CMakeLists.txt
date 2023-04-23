@@ -1,2 +1,2 @@
-add_executable(avl main.cpp include/treap.h src/treap.cpp)
+add_executable(avl main.cpp include/avl.hpp)
 target_include_directories(avl PRIVATE include)

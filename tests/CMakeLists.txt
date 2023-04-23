@@ -28,3 +28,9 @@ add_executable(treap_test treap_test.cpp ../treap/include/treap.h ../treap/src/t
 target_link_libraries(treap_test PRIVATE GTest::GTest)
 target_include_directories(treap_test PRIVATE ../treap/include)
 add_test(treap_test treap_test)
+
+
+add_executable(avl_test avl_test.cpp ../avl/include/avl.hpp)
+target_link_libraries(avl_test PRIVATE GTest::GTest)
+target_include_directories(avl_test PRIVATE ../avl/include)
+add_test(avl_test avl_test)
