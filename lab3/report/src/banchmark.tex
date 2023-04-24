@@ -1,0 +1,218 @@
+\section{Тесты}
+
+Чтобы убедиться, что AVL реализовано корректно, я 5000 раз добавлял элемент и потом убирал их в случайном порядке, и сравнивал количество элементов дерева с ожидаемым количеством.
+А также, чтобы проверить, что дерево сбалансированное, я вывел высоту дерева из $10^6$ элементов.
+
+Производительность своей реализации AVL, буду сравнивать с std::map
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+
+#include <gtest/gtest.h>
+
+
+#include <algorithm>
+
+#include <chrono>
+#include <random>
+
+
+#include "avl.hpp"
+
+
+std::mt19937 randomKey(std::chrono::steady_clock::now().time_since_epoch().count());
+
+
+TEST(AvlTest, MyTest) {
+    TAVlTree avl;
+    avl.Insert(1);
+    avl.Insert(2);
+    EXPECT_EQ(2, avl.Size());
+    avl.Clear();
+    EXPECT_EQ(0, avl.Size());
+}
+
+TEST(AvlTest, CommonTest) {
+    size_t const countActions = 5000;
+    TAVlTree avl;
+    std::vector <int> keys;
+    for (size_t i = 0; i < countActions; ++i) {
+        int key = static_cast<int>(randomKey());
+        avl.Insert(key);
+        keys.push_back(key);
+        EXPECT_EQ(i + 1, avl.Size());
+    }
+    std::random_device randomDevice;
+    std::mt19937 perm(randomDevice());
+    std::shuffle(keys.begin(), keys.end(), perm);
+    for (size_t i = 0; i < countActions; ++i) {
+        int key = keys[i];
+        EXPECT_EQ(avl.Exist(key), true);
+        avl.Erase(key);
+        EXPECT_EQ(countActions - i - 1, avl.Size());
+    }
+    EXPECT_EQ(avl.Empty(), true);
+}
+
+TEST(AvlTest, HeightTest) {
+    size_t const countNodes = 1000000;
+    TAVlTree avl;
+    for (size_t i = 0; i < countNodes; ++i) {
+        int key = static_cast<int>(randomKey());
+        avl.Insert(key);
+    }
+    std::cout << "Height: " << avl.HeightTree() << std::endl;
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=C++]
+    #include <cstddef>
+    #include <iostream>
+    
+    #include <gtest/gtest.h>
+    
+    
+    #include <algorithm>
+    
+    #include <chrono>
+    #include <random>
+    #include <string>
+    
+    
+    #include "avl.hpp"
+    
+    
+    std::mt19937 randomKey(std::chrono::steady_clock::now().time_since_epoch().count());
+    
+    
+    TEST(AvlTest, Benchmark) {
+        const size_t countOfActions = 1000000;
+        TAVlTree avl;
+        std::map <std::string, unsigned long long> dict;
+        std::vector <std::pair<std::string, unsigned long long>> dataInsert;
+        std::vector <std::pair<std::string, unsigned long long>> dataErase;
+        for (size_t i = 0; i < countOfActions; ++i) {
+            std::string key = std::to_string(randomKey());
+            unsigned long long value = randomKey();
+            dataInsert.emplace_back(key, value);
+            dataErase.emplace_back(key, value);
+        }
+        std::random_device randomDevice;
+        std::mt19937 perm(randomDevice());
+        std::shuffle(dataErase.begin(), dataErase.end(), perm);
+    
+    
+        auto begin = std::chrono::high_resolution_clock::now();
+        for (size_t i = 0; i < countOfActions; ++i) {
+            auto key = dataInsert[i].first;
+            auto value = dataInsert[i].second;
+            avl.Insert(key, value);
+        }
+        for (size_t i = 0; i < countOfActions; ++i) {
+            auto key = dataInsert[i].first;
+            avl.Erase(key);
+        }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto timeAVL = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+    
+    
+        begin = std::chrono::high_resolution_clock::now();
+        for (size_t i = 0; i < countOfActions; ++i) {
+            auto key = dataInsert[i].first;
+            auto value = dataInsert[i].second;
+            dict[key] = value;
+        }
+        for (size_t i = 0; i < countOfActions; ++i) {
+            auto key = dataInsert[i].first;
+            dict.erase(key);
+        }
+        end = std::chrono::high_resolution_clock::now();
+        auto timeMAP = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+    
+    
+        std::cout << "AVL time: " << timeAVL << " ms\n";
+        std::cout << "std::map time: " << timeMAP << " ms\n";
+    
+    }
+    
+    
+
+\end{lstlisting}
+
+
+\begin{alltt}
+
+
+4: Test command: /home/alex/mai-da-labs/build/tests/avl_test
+4: Working Directory: /home/alex/mai-da-labs/build/tests
+4: Test timeout computed to be: 10000000
+4: Running main() from /home/alex/mai-da-labs/build/_deps/googletest-src/googletest/src/gtest_main.cc
+4: [==========] Running 3 tests from 1 test suite.
+4: [----------] Global test environment set-up.
+4: [----------] 3 tests from AvlTest
+4: [ RUN      ] AvlTest.MyTest
+4: [       OK ] AvlTest.MyTest (0 ms)
+4: [ RUN      ] AvlTest.CommonTest
+4: [       OK ] AvlTest.CommonTest (149 ms)
+4: [ RUN      ] AvlTest.HeightTest
+4: Height: 37
+4: [       OK ] AvlTest.HeightTest (1727 ms)
+4: [----------] 3 tests from AvlTest (1877 ms total)
+4: 
+4: [----------] Global test environment tear-down
+4: [==========] 3 tests from 1 test suite ran. (1877 ms total)
+4: [  PASSED  ] 3 tests.
+1/1 Test #4: avl_test .........................   Passed    1.88 sec
+
+The following tests passed:
+    avl_test
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.89 sec
+[alex@fedora build]$ ctest -V -R lab2_test
+UpdateCTestConfiguration  from :/home/alex/mai-da-labs/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/home/alex/mai-da-labs/build/DartConfiguration.tcl
+Test project /home/alex/mai-da-labs/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 5
+    Start 5: lab2_test
+
+5: Test command: /home/alex/mai-da-labs/build/tests/lab2_test
+5: Working Directory: /home/alex/mai-da-labs/build/tests
+5: Test timeout computed to be: 10000000
+5: Running main() from /home/alex/mai-da-labs/build/_deps/googletest-src/googletest/src/gtest_main.cc
+5: [==========] Running 1 test from 1 test suite.
+5: [----------] Global test environment set-up.
+5: [----------] 1 test from AvlTest
+5: [ RUN      ] AvlTest.Benchmark
+5: AVL time: 4025 ms
+5: std::map time: 2683 ms
+5: [       OK ] AvlTest.Benchmark (7091 ms)
+5: [----------] 1 test from AvlTest (7091 ms total)
+5: 
+5: [----------] Global test environment tear-down
+5: [==========] 1 test from 1 test suite ran. (7091 ms total)
+5: [  PASSED  ] 1 test.
+1/1 Test #5: lab2_test ........................   Passed    7.10 sec
+
+The following tests passed:
+    lab2_test
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   7.10 sec
+    
+\end{alltt}
+
+Как видно, $std::map$ выиграл у $AVL$, так как $std::map$ реализовано с помощью КЧД, и, возможно, операция балансировки вызывается реже.
+
+
+\pagebreak
+

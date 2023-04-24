@@ -162,12 +162,6 @@ class TAVlTree {
         return 0;
     }
 
-    size_t HeightTree(TNode* node) {
-        if (node == nullptr) {
-            return 0;
-        }
-        return 1 + std::max(Height(node->left), Height(node->right));
-    }
 
     void SaveToFile(std::ofstream& file, TNode* node) {
         if (node == nullptr) {
@@ -221,7 +215,10 @@ class TAVlTree {
     }
 
     size_t HeightTree() {
-        return HeightTree(root);
+        if (root == nullptr) {
+            return 0;
+        }
+        return root->height;
     }
 
     void SaveToFile(std::ofstream& file) {

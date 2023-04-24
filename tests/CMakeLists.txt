@@ -34,3 +34,9 @@ add_executable(avl_test avl_test.cpp ../avl/include/avl.hpp)
 target_link_libraries(avl_test PRIVATE GTest::GTest)
 target_include_directories(avl_test PRIVATE ../avl/include)
 add_test(avl_test avl_test)
+
+
+add_executable(lab2_test lab2_test.cpp ../lab2_avl/include/avl.hpp)
+target_link_libraries(lab2_test PRIVATE GTest::GTest)
+target_include_directories(lab2_test PRIVATE ../lab2_avl/include)
+add_test(lab2_test lab2_test)

@@ -19,7 +19,7 @@ class TAVlTree {
         TNode* left;
         TNode* right;
         TNode(std::string& key, unsigned long long value) {
-            this->key = std::move(key);
+            this->key = key;
             this->value = value;
             left = nullptr;
             right = nullptr;
@@ -171,7 +171,7 @@ class TAVlTree {
         if (node == nullptr) {
             return 0;
         }
-        return 1 + std::max(Height(node->left), Height(node->right));
+        return node->height;
     }
 
     void SaveToFile(std::ofstream& file, TNode* node) {
