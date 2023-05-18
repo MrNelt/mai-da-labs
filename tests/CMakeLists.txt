@@ -40,3 +40,9 @@ add_executable(lab2_test lab2_test.cpp ../lab2_avl/include/avl.hpp)
 target_link_libraries(lab2_test PRIVATE GTest::GTest)
 target_include_directories(lab2_test PRIVATE ../lab2_avl/include)
 add_test(lab2_test lab2_test)
+
+
+add_executable(lab4_test lab4_test.cpp ../lab4_aho/include/aho.hpp)
+target_link_libraries(lab4_test PRIVATE GTest::GTest)
+target_include_directories(lab4_test PRIVATE ../lab4_aho/include)
+add_test(lab4_test lab4_test)

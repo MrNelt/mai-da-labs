@@ -13,6 +13,7 @@ endif()
 add_subdirectory(lab1)
 add_subdirectory(lab2_treap)
 add_subdirectory(lab2_avl)
+add_subdirectory(lab4_aho)
 
 add_subdirectory(radix_sort)
 add_subdirectory(treap)
