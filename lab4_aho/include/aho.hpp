@@ -63,27 +63,6 @@ private:
         return Next(node->fail, num);
     }
 
-    void Print(TNode* node, std::vector<unsigned long long> stack) {
-        if (node != nullptr) {
-            if (node != root) {
-                stack.push_back(node->value);
-            }
-            for (auto elem : node->go) {
-                if (elem.second != nullptr) {
-                    Print(elem.second, stack);
-                }
-            }
-            if (node->isLeaf) {
-                for (auto pid : node->id) {
-                    for (auto num: stack) {
-                        std::cout << num << " ";
-                    }
-                    std::cout << "ID: " << pid << "\n";
-                }
-            }
-        }
-    }
-
 public:
 
     TAho() {
@@ -93,10 +72,7 @@ public:
     ~TAho() {
         Destroy(root);
     }
-    void Print() {
-        std::vector <unsigned long long > stack;
-        Print(root, stack);
-    }
+
     void AddVectorOfNums(std::vector<unsigned long long>& nums, unsigned long long pid) {
         auto *temp = root;
         for (auto num : nums) {

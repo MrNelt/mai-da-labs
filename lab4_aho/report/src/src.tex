@@ -1,270 +1,301 @@
 \section{Описание}
 
-АВЛ-дерево (англ. AVL-Tree) — сбалансированное двоичное дерево поиска, в котором поддерживается следующее свойство: для каждой его вершины высота её двух поддеревьев различается не более чем на 1.
+Алгоритм Ахо-Корасик
 
+Пусть дан набор строк и текст. Нужно найти все вхождения строк в текст.
 
-АВЛ-деревья названы по первым буквам фамилий их изобретателей, Г. М. Адельсона-Вельского и Е. М. Ландиса, которые впервые предложили использовать АВЛ-деревья в 1962 году.
+Решать эту задачу будем следующим образом. Будем обрабатывать символы текста по одному и поддерживать наибольшую строку,
+являющуюся наибольшим префиксом паттерна, и при этом также суффиксом считанного на данный момент текста. Если эта строка совпадает с каким-то
+паттерном, то отметим текущий символ — в нём заканчивается какая-то строка.
 
+Для этой задачи нам нужно как-то эффективно хранить и работать со всеми префиксами паттернами — для этого нам и понадобится префиксное дерево.
 
-АВЛ-дерево — это прежде всего двоичное дерево поиска, ключи которого удовлетворяют стандартному свойству: ключ любого узла дерева не меньше любого ключа в левом поддереве данного узла и не больше любого ключа в правом поддереве этого узла. Это значит, что для поиска нужного ключа в АВЛ-дереве можно использовать стандартный алгоритм.
+Добавим все слова в префиксное дерево и пометим соответствующие им вершины как терминальные.
+Теперь наша задача состоит в том, чтобы при добавлении очередного символа быстро находить вершину
+в префиксном дереве,
+которая соответcтвует
+max
+входящему в бор суффиксу нового выписанного префикса. Для этого нам понадобятся несколько вспомогательных понятий.
 
+1) связи неудач (они ведут ровно в те вершины, которые соответствуют самому длинному «сматченному» суффиксу)
 
-Особенностью АВЛ-дерева является то, что оно является сбалансированным в следующем смысле: для любого узла дерева высота его правого поддерева отличается от высоты левого поддерева не более чем на единицу.
+2) связи выхода (они были в моей первой реализации алгоритма). Связи выхода необходимы, так как некоторые паттерны могут быть подстроками других паттернов.
+Поэтому они просто ведут в терминальную вершину.
 
+Алгоритм поиска:
 
-Традиционно, узлы АВЛ-дерева хранят не высоту, а разницу высот правого и левого поддеревьев (так называемый balance factor), которая может принимать только три значения -1, 0 и 1.
+Обрабатываем текст посимвольно. Пытаемся проходить по ветке бора, если вершина терминальная, то выписываем ответ,
+а также обрабатываем рекурсивно связи выхода. Если пройти по вершине не получается, то проходим по связи неудач.
 
+Алгоритм построения связей неудач:
 
-В процессе добавления или удаления узлов в АВЛ-дереве возможно возникновение ситуации, когда balance factor некоторых узлов оказывается равными 2 или -2, т.е. возникает расбалансировка поддерева. Для выправления ситуации применяются хорошо нам известные повороты вокруг тех или иных узлов дерева.
+для всех паттернов длины 1 - ведет в корень.
+Для всех паттернов длины $n$ - идем по связи неудач длины $n - 1$(она точно есть), пытаемся пройти из этой вершины дальше,
+если не получается, то идем дальше по связи неудач. Повторяем, пока не получится пройти дальше или не дойдем до корня.
 
+Реализация с помощью BFS
 
-Простой поворот вправо (влево) производит следующую трансформацию дерева:
+Алгоритм построения связи выхода:
 
+во время построения связей неудач проверяем:
 
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[scale=0.5]{./images/0.jpg}\caption{}\label{figure1}
-\end{center}
-\end{figure}
+1) если для текущей вершины связь неудачи ведет в терминальную вершину, то она является связью выхода.
 
-Рассмотрим теперь ситуацию дисбаланса, когда высота правого поддерева узла p на 2 больше высоты левого поддерева (обратный случай является симметричным и реализуется аналогично).
-Пусть q — правый дочерний узел узла p, а s — левый дочерний узел узла q.
+2) если для текущей вершины связь неудачи ведет в нетерминальную вершину со связью выхода. То она так же является связью выхода
+для текущей вершины.
 
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[scale=0.5]{./images/1.jpg}\caption{}\label{figure1}
-\end{center}
-\end{figure}
-
-Анализ возможных случаев в рамках данной ситуации показывает, что для исправления расбалансировки в узле p достаточно выполнить либо простой поворот влево вокруг p, либо так называемый большой поворот влево вокруг того же p. Простой поворот выполняется при условии,
-что высота левого поддерева узла q больше высоты его правого поддерева: h(s) <= h(D).
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[scale=0.5]{./images/2.jpg}\caption{}\label{figure1}
-\end{center}
-\end{figure}
-
-Большой поворот применяется при условии h(s)>h(D) и сводится в данном случае к двум простым — сначала правый поворот вокруг q и затем левый вокруг p.
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[scale=0.5]{./images/3.jpg}\caption{}\label{figure1}
-\end{center}
-\end{figure}
-
-Вставка нового ключа в АВЛ-дерево выполняется, по большому счету, так же, как это делается в простых деревьях поиска: спускаемся вниз по дереву, выбирая правое или левое направление движения в зависимости от результата сравнения ключа в текущем узле и вставляемого ключа.
-Единственное отличие заключается в том, что при возвращении из рекурсии (т.е. после того, как ключ вставлен либо в правое, либо в левое поддерево, и это дерево сбалансировано)
-выполняется балансировка текущего узла.
-
-Удаление. Идея следующая: находим узел p с заданным ключом k (если не находим, то делать ничего не надо), в правом поддереве находим узел min с наименьшим ключом и заменяем удаляемый узел p на найденный узел min. Вызываем балансировку узла.
 
 \pagebreak
 
 \section{Исходный код}
+
 Cтруктура программы состоит из 2 файлов:
 
-1. $avl.hpp$ В нем содержится объявление и реализация класса АВЛ-дерева.
+1. $aho.hpp$ Реализация алгоритма Ахо-Корасик.
 
-2. $main\_cpp$ Обработка команд.
- 
+2. $main\_cpp$ Обработка паттернов и текста, вывод ответа.
+
+3. $CmakeLists.txt$ Описание сборки программы
 \begin{lstlisting}[language=C++]
-	#ifndef AVL_H
-	#define AVL_H
-	
-	
-	#include <algorithm>
-	#include <cstddef>
-	#include <fstream>
-	#include <iostream>
-	#include <stdexcept>
-	#include <string>
-	#include <utility>
-	
-	class TAVlTree {
-		private:
-		struct TNode {
-			std::string key;
-			unsigned long long value;
-			int height;
-			TNode* left;
-			TNode* right;
-			TNode(std::string& key, unsigned long long value) {
-				this->key = std::move(key);
-				this->value = value;
-				left = nullptr;
-				right = nullptr;
-				height = 1;
-			}
-		};
-	
-		TNode* root;
-	
-		int Height(TNode* node) // O(1) node->height
-	
-		int BFactor(TNode* node); // balance factor O(1) node->right->height - node->left->height
-	
-		void FixHeight(TNode* node); // O(1)
-	
-		TNode* RotateRight(TNode* node); // O(1)
-	
-		TNode* RotateLeft(TNode* node); // O(1)
-	
-		TNode* Balance(TNode* node); // O(1)
-	
-		TNode* Insert(TNode* node, std::string& key, unsigned long long value); O(log n)
-	
-		TNode* Find(TNode* node, std::string& key); // O(log n)
-	
-		TNode* FindMin(TNode* node); // O(log n)
-	
-		TNode* RemoveMin(TNode* node); // O(log n)
-	
-		TNode* Erase(TNode* node, std::string& key); // O(log n)
-	
-		void Destroy(TNode*& node); // O(n)
-	
-		void Destroy(); // O(n)
-	
-		size_t Size(TNode* node); // O(n)
-	
-		size_t HeightTree(TNode* node); // O(1) node->height
-	
-		void SaveToFile(std::ofstream& file, TNode* node); // O(n)
-	
-		public:
-	
-		TAVlTree();
-	
-		~TAVlTree();
-	
-		void Insert(std::string& key, unsigned long long value); // adding a node O(log n)
+    #ifndef AHO_HPP
+    #define AHO_HPP
 
-		void Erase(std::string& key); // deleting a node O(log n)
-	
-		std::pair<unsigned long long, bool> Exist(std::string& key); // O(log n)
-	
-		size_t Size(); // count of nodes O(n)
-	
-		void Clear(); // clear tree O(n)
-	
-		bool Empty(); // checking for emptiness O(1)
-	
-		size_t HeightTree(); // height of tree O(1)
-	
-		void SaveToFile(std::ofstream& file); // O(n)
-	
-		void LoadFromFile(std::ifstream& file); // O(n * log n)
+    #include <queue>
+    #include <unordered_map>
+    #include <vector>
+    #include <iostream>
+    #include <sstream>
 
-	}
-	#endif
-	
+    class TAho {
+
+    private:
+        struct TNode {
+            unsigned long long value;
+            std::vector<unsigned long long> id;
+            TNode* parent;
+            TNode* fail;
+            std::vector<size_t> size;
+            std::unordered_map<unsigned long long, TNode*> go;
+            bool isLeaf;
+        };
+        TNode* root;
+
+        static void Destroy(TNode* node) {
+            if (node != nullptr) {
+                for (auto sons : node->go) {
+                    Destroy(sons.second);
+                }
+                delete node;
+            }
+        }
+
+        TNode* GetFailPointerFromLastFail(TNode* node, unsigned long long num) {
+            if (node->go[num] == nullptr) {
+                if (node != root) {
+                    return GetFailPointerFromLastFail(node->fail, num);
+                }
+                return root;
+            }
+            return node->go[num];
+        }
+
+        TNode* GetFail(TNode* node, unsigned long long num) {
+            if (node == root) {
+                return root;
+            }
+            if (node->parent == root) {
+                return root;
+            }
+            return GetFailPointerFromLastFail(node->parent->fail, num);
+        }
+
+        TNode* Next(TNode* node, unsigned long long num) {
+            if (node == root) {
+                if (node->go[num] != nullptr) {
+                    return node->go[num];
+                }
+                return node;
+            }
+            if (node->go[num] != nullptr) {
+                return node->go[num];
+            }
+            return Next(node->fail, num);
+        }
+
+    public:
+
+        TAho() {
+            root = new TNode;
+        }
+
+        ~TAho() {
+            Destroy(root);
+        }
+
+        void AddVectorOfNums(std::vector<unsigned long long>& nums, unsigned long long pid) {
+            auto *temp = root;
+            for (auto num : nums) {
+                if (temp->go[num] == nullptr) {
+                    temp->go[num] = new TNode;
+                    temp->go[num]->parent = temp;
+                    temp = temp->go[num];
+                    temp->value = num;
+                } else {
+                    temp = temp->go[num];
+                }
+            }
+            temp->isLeaf = true;
+            temp->id.push_back(pid);
+            temp->size.push_back(nums.size());
+
+        }
+
+
+        void Init() {
+            std::queue <TNode*> queue;
+            queue.push(root);
+            while (!queue.empty()) {
+                auto* node = queue.front();
+                queue.pop();
+                node->fail = GetFail(node, node->value);
+                if (node != root && node->fail->isLeaf) {
+                    node->isLeaf = true;
+                    for (size_t i = 0; i < node->fail->size.size(); ++i) {
+                        node->size.push_back(node->fail->size[i]);
+                        node->id.push_back(node->fail->id[i]);
+                    }
+                } else if (node != root && node->fail->fail != nullptr && node->fail->fail->isLeaf) {
+                    node->isLeaf = true;
+                    for (size_t i = 0; i < node->fail->fail->size.size(); ++i) {
+                        node->size.push_back(node->fail->fail->size[i]);
+                        node->id.push_back(node->fail->fail->id[i]);
+                    }
+                }
+                for (auto elem : node->go) {
+                    if (elem.second != nullptr) {
+                        queue.push(elem.second);
+                    }
+                }
+            }
+        }
+
+        void AddToAnswer(std::vector <std::pair<unsigned long long, unsigned long long>>& answer, TNode* temp, unsigned long long pos) {
+            if (temp->isLeaf && temp != root) {
+                for (size_t i = 0; i < temp->size.size(); ++i) {
+                    answer.emplace_back(pos - temp->size[i], temp->id[i]);
+                }
+            }
+
+        }
+
+        std::vector <std::pair<unsigned long long, unsigned long long>> FindPosPatterns(const std::vector<unsigned long long >& nums) {
+            std::vector <std::pair<unsigned long long, unsigned long long>> answer;
+            auto* temp = root;
+            unsigned long long pos = 0;
+            for (const auto& num : nums) {
+                AddToAnswer(answer, temp, pos);
+                temp = Next(temp, num);
+                pos++;
+            }
+            AddToAnswer(answer, temp, pos);
+            return answer;
+        }
+    };
+
+    #endif
 \end{lstlisting}
 
 \begin{lstlisting}[language=C++]
-	#include <iostream>
-	#include <string>
-	#include <algorithm>
-	
-	#include "avl.hpp"
-	
-	
-	int main() {
-		TAVlTree avl;
-		std::string command;
-		while (std::cin >> command) {
-			if (command == "+") {
-				std::string key;
-				unsigned long long value;
-				std::cin >> key >> value;
-				std::transform(key.begin(), key.end(), key.begin(),
-							   [](unsigned char symb){ return std::tolower(symb); });
-				if (avl.Exist(key).second) {
-					std::cout << "Exist\n";
-				} else {
-					avl.Insert(key, value);
-					std::cout << "OK\n";
-				}
-			}
-			else if (command == "-") {
-				std::string key;
-				std::cin >> key;
-				std::transform(key.begin(), key.end(), key.begin(),
-							   [](unsigned char symb){ return std::tolower(symb); });
-				if (!avl.Exist(key).second) {
-					std::cout << "NoSuchWord\n";
-				} else {
-					avl.Erase(key);
-					std::cout << "OK\n";
-				}
-			
-			} else if (command == "!") {
-				std::string action;
-				std::cin >> action;
-				std::string path;
-				std::cin >> path;
-				if (action == "Save") {   
-					std::ofstream file(path, std::ios::binary | std::ios::trunc);
-					auto size = avl.Size();
-					file.write(reinterpret_cast<char*>(&size), sizeof(unsigned long long));
-					if (size > 0) {
-						avl.SaveToFile(file);
-					}
-					std::cout << "OK\n";
-					file.close();
-	
-				} else {
-					std::ifstream file(path, std::ios::binary);
-					avl.LoadFromFile(file);
-					std::cout << "OK\n";
-					file.close();
-	   
-				}
-	
-			} else {
-				std::transform(command.begin(), command.end(), command.begin(),
-							   [](unsigned char symb){ return std::tolower(symb); });
-				auto node = avl.Exist(command);
-				if (node.second) {
-					std::cout << "OK: " << node.first << "\n";
-				} else {
-					std::cout << "NoSuchWord\n";
-				}
-			}
-		}
-	}
-\end{lstlisting}
+    #include <iostream>
+    #include <string>
+    #include <sstream>
+    #include "aho.hpp"
 
+
+    int main() {
+        TAho aho;
+        std::string line;
+        std::getline(std::cin, line);
+        int pid = 0;
+        while (!line.empty()) {
+            pid++;
+            int num;
+            auto stream = std::istringstream(line);
+            std::vector<unsigned long long int> nums;
+            while (stream >> num) {
+                nums.push_back(num);
+            }
+            aho.AddVectorOfNums(nums, pid);
+            std::getline(std::cin, line);
+        }
+        aho.Init();
+        std::vector<std::pair<int, int>> info;
+        std::vector<unsigned long long int> text;
+        int page = 0;
+        int num = 0;
+        line = "";
+        std::getline(std::cin, line);
+        while (!line.empty()) {
+            page++;
+            auto stream = std::istringstream(line);
+            num = 0;
+            int elem;
+            while (stream >> elem) {
+                num++;
+                text.push_back(elem);
+                info.emplace_back(page, num);
+            }
+            std::getline(std::cin, line);
+        }
+        auto answers = aho.FindPosPatterns(text);;
+        for (auto answer : answers) {
+            std::cout << info[answer.first].first << ", " << info[answer.first].second << ", " << answer.second << "\n";
+        }
+    }
+
+\end{lstlisting}
+\begin{lstlisting}
+    add_executable(lab4_aho main.cpp include/aho.hpp)
+    target_include_directories(lab4_aho PRIVATE include)
+\end{lstlisting}
 \pagebreak
 
 \section{Консоль}
 \begin{alltt}
-[alex@fedora mai-da-labs]$ cd build
 [alex@fedora build]$ cmake ../
--- Configuring done (0.3s)
+-- The C compiler identification is GNU 12.2.1
+-- The CXX compiler identification is GNU 12.2.1
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (6.3s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/alex/mai-da-labs/build
 [alex@fedora build]$ cmake --build .
-[2/2] Linking CXX executable lab2_avl/lab2_avl
-[alex@fedora build]$ cd lab2_avl
-[alex@fedora lab2_avl]$ ls
-CMakeFiles  cmake_install.cmake  CTestTestfile.cmake  lab2_avl  test.txt
-[alex@fedora lab2_avl]$ cat test.txt 
-+ a 1
-+ A 2
-+ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 18446744073709551615
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-A
-- A
-a
-[alex@fedora lab2_avl]$ ./lab2_avl <test.txt 
-OK
-Exist
-OK
-OK: 18446744073709551615
-OK: 1
-OK
-NoSuchWord	
+[23/23] Linking CXX executable tests/avl_test
+[alex@fedora build]$ cd lab4_aho/
+[alex@fedora lab4_aho]$ cat test.txt
+1 0002 001 2
+1 2 1
+2 02 2 2
+
+01 2 1 2   1 2 1 3
+2 2 2 2 02
+[alex@fedora lab4_aho]$ ./lab4_aho <test.txt
+1, 1, 2
+1, 1, 1
+1, 3, 2
+1, 3, 1
+1, 5, 2
+2, 1, 3
+2, 2, 3
 \end{alltt}
 \pagebreak
 

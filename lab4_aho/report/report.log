@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2023.3.9)  24 APR 2023 10:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2023.3.9)  20 MAY 2023 01:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -643,17 +643,7 @@ File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 LaTeX Warning: Unused global option(s):
     [pdf].
 
-(./report.aux
-
-LaTeX Warning: Label `figure1' multiply defined.
-
-
-LaTeX Warning: Label `figure1' multiply defined.
-
-
-LaTeX Warning: Label `figure1' multiply defined.
-
-)
+(./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
@@ -736,39 +726,9 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/usr/share/texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./src/prob
 lem.tex
-Overfull \hbox (8.27475pt too wide) in paragraph at lines 26--26
-\T2B/cmr/m/n/12 данных, на основе которой разработать программу-словарь. В слов
-аре каждому ключу,
- []
-
-
-Overfull \hbox (5.17819pt too wide) in paragraph at lines 26--26
-\T2B/cmr/m/n/12 представляющему из себя регистронезависимую последовательность 
-букв английского
- []
-
-
-Overfull \hbox (17.80011pt too wide) in paragraph at lines 26--26
-\T2B/cmr/m/n/12 вывести строку ѕOKї, если операция прошла успешно, ѕEx-istї, ес
-ли слово уже находится
- []
-
-
-Overfull \hbox (1.91516pt too wide) in paragraph at lines 26--26
-\T2B/cmr/m/n/12 происходит работа); в случае неуспеха, должна быть выведена диа
-гностика, а рабочий
- []
-
-
-Overfull \hbox (5.66356pt too wide) in paragraph at lines 26--26
-\T2B/cmr/m/n/12 словарь должен остаться без изменений. Кроме системных ошибок, 
-программа должна
- []
-
-
-Overfull \hbox (28.67255pt too wide) in paragraph at lines 26--26
-\T2B/cmr/m/n/12 корректно обрабатывать случаи несовпадения формата указанного ф
-айла и представления
+Overfull \hbox (28.17883pt too wide) in paragraph at lines 12--12
+[]\T2B/cmr/m/n/12 Необходимо реализовать один из стандартных алгоритмов поиска 
+образцов для указанного
  []
 
 )pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
@@ -777,160 +737,89 @@ Overfull \hbox (28.67255pt too wide) in paragraph at lines 26--26
                    \relax 
 l.33 \input{src/problem}
                          [1] (./src/src.tex
-Overfull \hbox (28.02005pt too wide) in paragraph at lines 3--4
-\T2B/cmr/m/n/12 поддерживается следующее свойство: для каждой его вершины высот
-а еј двух поддеревьев
+Overfull \hbox (1.09938pt too wide) in paragraph at lines 7--10
+\T2B/cmr/m/n/12 по одному и поддерживать наибольшую строку, являющуюся наибольш
+им префиксом
  []
 
 
-Overfull \hbox (3.03648pt too wide) in paragraph at lines 6--7
-[]\T2B/cmr/m/n/12 АВЛ-деревья названы по первым буквам фамилий их изобретателей
-, Г. М. Адельсона-
+Overfull \hbox (17.737pt too wide) in paragraph at lines 11--12
+[]\T2B/cmr/m/n/12 Для этой задачи нам нужно как-то эффективно хранить и работат
+ь со всеми префиксами
  []
 
 
-Overfull \hbox (0.26076pt too wide) in paragraph at lines 6--7
-\T2B/cmr/m/n/12 Вельского и Е. М. Ландиса, которые впервые предложили использов
-ать АВЛ-деревья
+Overfull \hbox (2.5635pt too wide) in paragraph at lines 13--19
+\T2B/cmr/m/n/12 входящему в бор суффиксу нового выписанного префикса. Для этого
+ нам понадобятся
  []
 
 
-Overfull \hbox (16.26247pt too wide) in paragraph at lines 9--10
-[]\T2B/cmr/m/n/12 АВЛ-дерево ^^V это прежде всего двоичное дерево поиска, ключи
- которого удовлетворяют
+Overfull \hbox (0.9363pt too wide) in paragraph at lines 27--29
+\T2B/cmr/m/n/12 терминальная, то выписываем ответ, а также обрабатываем рекурси
+вно связи выхода.
  []
 
-
-Overfull \hbox (33.23047pt too wide) in paragraph at lines 9--10
-\T2B/cmr/m/n/12 Это значит, что для поиска нужного ключа в АВЛ-дереве можно исп
-ользовать стандартный
- []
-
-
-Overfull \hbox (24.257pt too wide) in paragraph at lines 12--13
-[]\T2B/cmr/m/n/12 Особенностью АВЛ-дерева является то, что оно является сбаланс
-ированным в следующем
- []
-
-
-Overfull \hbox (15.94232pt too wide) in paragraph at lines 18--19
-\T2B/cmr/m/n/12 возникает расбалансировка поддерева. Для выправления ситуации п
-рименяются хорошо
- []
-
-<./images/0.jpg, id=40, 649.42625pt x 313.17pt>
-File: ./images/0.jpg Graphic file (type jpg)
-<use ./images/0.jpg>
-Package pdftex.def Info: ./images/0.jpg  used on input line 26.
-(pdftex.def)             Requested size: 324.71233pt x 156.58461pt.
-[2 <./images/0.jpg>]
-<./images/1.jpg, id=46, 628.3475pt x 312.16624pt>
-File: ./images/1.jpg Graphic file (type jpg)
-<use ./images/1.jpg>
-Package pdftex.def Info: ./images/1.jpg  used on input line 35.
-(pdftex.def)             Requested size: 314.17297pt x 156.08273pt.
-
-Overfull \hbox (13.00551pt too wide) in paragraph at lines 39--41
-[]\T2B/cmr/m/n/12 Анализ возможных случаев в рамках данной ситуации показывает,
- что для исправления
- []
-
-<./images/2.jpg, id=47, 594.22pt x 257.96375pt>
-File: ./images/2.jpg Graphic file (type jpg)
-<use ./images/2.jpg>
-Package pdftex.def Info: ./images/2.jpg  used on input line 44.
-(pdftex.def)             Requested size: 297.10927pt x 128.98155pt.
-<./images/3.jpg, id=48, 869.2475pt x 288.07625pt>
-File: ./images/3.jpg Graphic file (type jpg)
-<use ./images/3.jpg>
-Package pdftex.def Info: ./images/3.jpg  used on input line 52.
-(pdftex.def)             Requested size: 434.62268pt x 144.03777pt.
-[3 <./images/1.jpg> <./images/2.jpg>]
-Overfull \hbox (6.64462pt too wide) in paragraph at lines 60--61
-\T2B/cmr/m/n/12 ключом и заменяем удаляемый узел p на найденный узел min. Вызыв
-аем балансировку
- []
-
-[4 <./images/3.jpg>]
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+[2] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
 LaTeX Font Info:    Trying to load font information for T2B+cmtt on input line 
-71.
+59.
 
 (/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2bcmtt.fd
 File: t2bcmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 )
 LaTeX Font Info:    Font shape `T2B/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T2B/cmtt/m/n' tried instead on input line 84.
- [5] [6] [7]
-[8]
-Overfull \hbox (1137.51697pt too wide) in paragraph at lines 255--255
-[]\T2B/cmtt/m/n/12 + aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+(Font)              Font shape `T2B/cmtt/m/n' tried instead on input line 69.
+ [3] [4] [5]
+[6] [7] [8]) (./src/banchmark.tex
+Overfull \hbox (13.66225pt too wide) in paragraph at lines 4--6
+\T2B/cmr/m/n/12 Сравнивать правильность и производительность алгоритма буду с н
+аивным алгоритмом
+ []
+
+[9] [10]
+Overfull \hbox (7.76785pt too wide) in paragraph at lines 114--114
+[]\T2B/cmtt/m/n/12 /var/lib/snapd/snap/clion/237/bin/cmake/linux/x64/bin/ctest 
+--extra-verbose
  []
 
 
-Overfull \hbox (1125.16998pt too wide) in paragraph at lines 256--256
-[]\T2B/cmtt/m/n/12 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[] 
- []
-
-[9]) (./src/banchmark.tex [10] [11]
-Overfull \hbox (168.27866pt too wide) in paragraph at lines 150--150
-[]\T2B/cmtt/m/n/12 4: Running main() from /home/alex/mai-da-labs/build/_deps/go
-ogletest-src/googletest/src/gtest_main.cc[] 
- []
-
-[12]
-Overfull \hbox (50.9823pt too wide) in paragraph at lines 175--175
+Overfull \hbox (50.9823pt too wide) in paragraph at lines 116--116
 []\T2B/cmtt/m/n/12 UpdateCTestConfiguration  from :/home/alex/mai-da-labs/build
 /DartConfiguration.tcl[] 
  []
 
 
-Overfull \hbox (50.9823pt too wide) in paragraph at lines 176--176
+Overfull \hbox (50.9823pt too wide) in paragraph at lines 117--117
 []\T2B/cmtt/m/n/12 UpdateCTestConfiguration  from :/home/alex/mai-da-labs/build
 /DartConfiguration.tcl[] 
  []
 
 
-Overfull \hbox (168.27866pt too wide) in paragraph at lines 190--190
-[]\T2B/cmtt/m/n/12 5: Running main() from /home/alex/mai-da-labs/build/_deps/go
+Overfull \hbox (168.27866pt too wide) in paragraph at lines 129--129
+[]\T2B/cmtt/m/n/12 6: Running main() from /home/alex/mai-da-labs/build/_deps/go
 ogletest-src/googletest/src/gtest_main.cc[] 
  []
 
-[13] [14]) (./src/thinks.tex) (./src/literature.tex
-Overfull \hbox (6.63086pt too wide) in paragraph at lines 2--1
-\T2B/cmr/m/n/12 сбалансированные деревья поиска и более подробно AVL дерево. Из
-учил как сохранять
- []
-
-[15]
+[11] [12]) (./src/thinks.tex) (./src/literature.tex [13]
 Underfull \hbox (badness 10000) in paragraph at lines 6--7
 \T2B/cmr/m/n/12 URL: \T2B/cmtt/m/n/12 https://neerc.ifmo.ru/wiki/index.php?titl
-e=АВЛ-дерево \T2B/cmr/m/n/12 (дата
+e=Алгоритм_Ахо-Корасик
  []
 
-) [16] (./report.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
+) [14] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 443CF9F8E4BD2FF707A0FF424EA4D4C4;519.
  ) 
 Here is how much of TeX's memory you used:
- 14693 strings out of 480852
- 204151 string characters out of 5906874
- 986419 words of memory out of 6000000
- 31466 multiletter control sequences out of 15000+600000
- 415815 words of font info for 57 fonts, out of 8000000 for 9000
+ 14644 strings out of 480852
+ 203556 string characters out of 5906874
+ 1061177 words of memory out of 6000000
+ 31420 multiletter control sequences out of 15000+600000
+ 415506 words of font info for 56 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,7n,77p,966b,2054s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 75i,7n,77p,380b,2054s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t2b.enc}</us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texli
@@ -939,15 +828,14 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf
 fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/cm-super/sfbx1440.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/cm-super/sfbx1728.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm
--super/sfit1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/
-sfrm1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm120
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on report.pdf (17 pages, 336061 bytes).
+-super/sfrm1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/
+sfrm1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfti120
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on report.pdf (15 pages, 261757 bytes).
 PDF statistics:
- 523 PDF objects out of 1000 (max. 8388607)
- 482 compressed objects within 5 object streams
- 319 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 513 PDF objects out of 1000 (max. 8388607)
+ 479 compressed objects within 5 object streams
+ 323 named destinations out of 1000 (max. 500000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
